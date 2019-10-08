@@ -52,11 +52,11 @@ ENV OUT "-o "
 ENV F90_SER gfortran
 RUN make mpi
 
-ENV OPENFOAM_VER 1806
-WORKDIR /model
-RUN apt-get install -y libz-dev
-COPY openfoam.sh ./
-RUN bash ./openfoam.sh
+#ENV OPENFOAM_VER 1806
+#WORKDIR /model
+#RUN apt-get install -y libz-dev
+#COPY openfoam.sh ./
+#RUN bash ./openfoam.sh
 
 ENV HYPRE_VER 2.11.2
 WORKDIR /model
