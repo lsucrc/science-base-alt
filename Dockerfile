@@ -35,6 +35,7 @@ ENV FUNWAVE_VER Version_3.4
 WORKDIR /model
 #RUN git clone https://github.com/fengyanshi/FUNWAVE-TVD
 RUN wget https://github.com/fengyanshi/FUNWAVE-TVD/archive/${FUNWAVE_VER}.tar.gz
+RUN tar -zxvf ${FUNWAVE_VER}.tar.gz
 WORKDIR /model/FUNWAVE-TVD-${FUNWAVE_VER}/src
 #RUN git checkout `git rev-list -n 1 --before="${FUNWAVE_VER} 00:00" master`
 RUN make 
