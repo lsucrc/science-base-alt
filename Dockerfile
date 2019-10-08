@@ -45,6 +45,7 @@ WORKDIR /model
 RUN curl -kL http://downloads.sourceforge.net/project/swanmodel/swan/$(echo ${SWAN_VER}|sed 's/../&./')/swan${SWAN_VER}.tar.gz -o swan${SWAN_VER}.tgz
 RUN tar xzvf swan${SWAN_VER}.tgz
 WORKDIR /model/swan${SWAN_VER}
+RUN chmod 0755 /model/swan${SWAN_VER}
 ENV EXTO o
 ENV F90_MPI mpif90
 ENV FLAGS90_MSC -ffree-line-length-0
@@ -75,13 +76,17 @@ WORKDIR /model/NHWAVE/src
 COPY Makefile.NHWAVE Makefile
 RUN make 
 
+# copy runapp.sh to container
+WORKDIR /usr/local/bin
+COPY runapp.sh runapp.sh
+
 # Some older LSU machines need to accept dsa
 RUN echo PubkeyAcceptedKeyTypes +ssh-dss >> /etc/ssh/ssh_config
 
 # A file needs to exist in order to be mounted. For
 # ssh to work, we need to have a known hosts file.
 RUN touch /etc/ssh/ssh_known_hosts
-RUN mkdir -p /work
+RUN mkdir -p /workdir
 
 RUN useradd -m jovyan 
 USER jovyan
