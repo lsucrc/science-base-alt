@@ -16,6 +16,7 @@ then
     export SHELL=/bin/bash
     PROCS=$(lscpu | grep CPU.s.: | head -1 | cut -d: -f2)
     export WM_NCOMPPROCS=$(($PROCS/2))
+    export WM_PROJECT_DIR=$OPENFOAM_DIR
     cd $OPENFOAM_DIR
     source etc/bashrc
     export WM_THIRD_PARTY_DIR=$BASE_DIR/ThirdParty-v${OPENFOAM_VER}
@@ -34,7 +35,7 @@ then
 
     # Make it possible to pass other options to mpirun
     # using environment variable MPI_OPTS
-    perl -p -i -e 's/mpirun -np .nProcs/$& \$MPI_OPTS/' $OPENFOAM_DIR/bin/tools/RunFunctions
+    perl -p -i -e 's/mpirun -np .nProcs/$& \$MPI_OPTS/' $WM_PROJECT_DIR/bin/tools/RunFunctions
     foamSystemCheck
     ./Allwmake -j 2>&1 | tee make.out
 fi

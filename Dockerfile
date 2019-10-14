@@ -53,28 +53,29 @@ ENV OUT "-o "
 ENV F90_SER gfortran
 RUN make mpi
 
-#ENV OPENFOAM_VER 1806
+# Install Openfoam
+ENV OPENFOAM_VER 1806
+WORKDIR /model
+RUN apt-get install -y libz-dev
+COPY openfoam.sh ./
+RUN bash ./openfoam.sh
+
+#ENV HYPRE_VER 2.11.2
 #WORKDIR /model
-#RUN apt-get install -y libz-dev
-#COPY openfoam.sh ./
-#RUN bash ./openfoam.sh
+#RUN curl -kLO https://computing.llnl.gov/projects/hypre-scalable-linear-solvers-multigrid-methods/download/hypre-${HYPRE_VER}.tar.gz
+#RUN tar xzf hypre-${HYPRE_VER}.tar.gz
+#WORKDIR /model/hypre-${HYPRE_VER}/src
+#RUN ./configure
+#RUN make
 
-ENV HYPRE_VER 2.11.2
-WORKDIR /model
-RUN curl -kLO https://computing.llnl.gov/projects/hypre-scalable-linear-solvers-multigrid-methods/download/hypre-${HYPRE_VER}.tar.gz
-RUN tar xzf hypre-${HYPRE_VER}.tar.gz
-WORKDIR /model/hypre-${HYPRE_VER}/src
-RUN ./configure
-RUN make
-
-ENV NHWAVE_VER 2019-08-21
-WORKDIR /model
-RUN git clone https://github.com/JimKirby/NHWAVE
-WORKDIR /model/NHWAVE
-RUN git checkout `git rev-list -n 1 --before="${NHWAVE_VER} 00:00" master`
-WORKDIR /model/NHWAVE/src
-COPY Makefile.NHWAVE Makefile
-RUN make 
+#ENV NHWAVE_VER 2019-08-21
+#WORKDIR /model
+#RUN git clone https://github.com/JimKirby/NHWAVE
+#WORKDIR /model/NHWAVE
+#RUN git checkout `git rev-list -n 1 --before="${NHWAVE_VER} 00:00" master`
+#WORKDIR /model/NHWAVE/src
+#COPY Makefile.NHWAVE Makefile
+#RUN make 
 
 # copy runapp.sh to container
 WORKDIR /usr/local/bin
