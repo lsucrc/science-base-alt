@@ -1,11 +1,11 @@
 #!/bin/bash
-
-source /usr/local/bin/env.sh
+export BASE_DIR=/model
+#source /usr/local/bin/env.sh
 
 if [ "$OPENFOAM_VER" != "" ]
 then
     echo "BUILDING OPENFOAM: Version $OPENFOAM_VER"
-    export BASE_DIR="$HOME/dep-mpich$MPICH_VER"
+    # export BASE_DIR="$HOME/dep-mpich$MPICH_VER"
     mkdir -p $BASE_DIR
     cd $BASE_DIR
     curl -kLO https://sourceforge.net/projects/openfoamplus/files/v${OPENFOAM_VER}/OpenFOAM-v${OPENFOAM_VER}.tgz
@@ -34,7 +34,7 @@ then
 
     # Make it possible to pass other options to mpirun
     # using environment variable MPI_OPTS
-    perl -p -i -e 's/mpirun -np .nProcs/$& \$MPI_OPTS/' $WM_PROJECT_DIR/bin/tools/RunFunctions
+    perl -p -i -e 's/mpirun -np .nProcs/$& \$MPI_OPTS/' $OPENFOAM_DIR/bin/tools/RunFunctions
     foamSystemCheck
     ./Allwmake -j 2>&1 | tee make.out
 fi
