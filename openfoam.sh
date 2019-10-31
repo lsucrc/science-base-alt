@@ -30,6 +30,8 @@ then
     do
       perl -p -i -e 's/\bg\+\+/\${WM_CXX}/' $f
     done
+     
+    perl -p -i -e 's{libDir=}{libDir=/usr/local/mpich/lib #}' etc/config.sh/mpi
 
     source etc/bashrc
 
