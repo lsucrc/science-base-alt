@@ -16,7 +16,6 @@ then
     export SHELL=/bin/bash
     PROCS=$(lscpu | grep CPU.s.: | head -1 | cut -d: -f2)
     export WM_NCOMPPROCS=$(($PROCS/2))
-    export WM_PROJECT_DIR=$OPENFOAM_DIR
     cd $OPENFOAM_DIR
     source etc/bashrc
     export WM_THIRD_PARTY_DIR=$BASE_DIR/ThirdParty-v${OPENFOAM_VER}
